@@ -45,3 +45,13 @@ jobs:
     - name: Push Docker Image to Docker Hub
       run: docker push ${{ secrets.DOCKER_USERNAME }}/devopstool-new:latest
 
+   # Push the WAR file to Nexus using curl
+    - name: Push WAR to Nexus
+      env:
+        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      run: |
+        curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool-0.0.1-SNAPSHOT.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/0.0.1-SNAPSHOT/devopstool-0.0.1-SNAPSHOT.war
+
+      
+
