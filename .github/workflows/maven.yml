@@ -69,20 +69,33 @@ jobs:
 
       # Push the WAR file to Nexus
 
-      # Push the WAR file to Nexus
-      - name: Push WAR to Nexus
-        env:
-          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
-        run: |
-         mvn deploy:deploy-file \
-          -DgroupId=com.example \
-          -DartifactId=devopstool \
-          -Dversion=0.0.1-SNAPSHOT \
-          -Dpackaging=war \
-          -Dfile=target/devopstool.war \
-          -DrepositoryId=devopstoolnew \
-          -Durl=http://192.168.180.211:8088/devopstoolnew/
+      # # Push the WAR file to Nexus
+      # - name: Push WAR to Nexus
+      #   env:
+      #     NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      #     NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      #   run: |
+      #    mvn deploy:deploy-file \
+      #     -DgroupId=com.example \
+      #     -DartifactId=devopstool \
+      #     -Dversion=0.0.1-SNAPSHOT \
+      #     -Dpackaging=war \
+      #     -Dfile=target/devopstool.war \
+      #     -DrepositoryId=devopstoolnew \
+      #     -Durl=http://192.168.180.211:8088/devopstoolnew/
+        # Log in to Nexus Artifactory
+      - name: Log in to Nexus Artifactory
+        run: echo ${{ secrets.NEXUS_PASSWORD }} | docker login ${{ secrets.NEXUS_URL }} -u ${{ secrets.NEXUS_USERNAME }} --password-stdin
+
+    # Tag Docker image for Nexus Artifactory
+      - name: Tag Docker Image for Nexus
+        run: docker tag ${{ secrets.DOCKER_USERNAME }}/devopstool-new:latest ${{ secrets.NEXUS_URL }}/docker-img/devopstool-new:latest
+
+    # Push Docker image to Nexus Artifactory
+      - name: Push Docker Image to Nexus
+        run: docker push ${{ secrets.NEXUS_URL }}/docker-img/devopstool-new:latest
+
+         
 
 
       
