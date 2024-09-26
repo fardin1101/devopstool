@@ -76,7 +76,9 @@ jobs:
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
          mvn deploy:deploy-file \
+          -DgroupId=com.example \
           -DartifactId=devopstool \
+          -Dversion=0.0.1-SNAPSHOT \
           -Dpackaging=war \
           -Dfile=target/devopstool.war \
           -DrepositoryId=devopstoolnew/ \
