@@ -82,6 +82,7 @@ jobs:
           -Dpackaging=war \
           -Dfile=target/devopstool.war \
           -DrepositoryId=devopstoolnew \
-          -Durl=http://192.168.180.211:8088/#browse/browse:maven2-hosted:devopstoolnew/
+          -Durl=http://192.168.180.211:8088/repository/devopstoolnew/
+
 
       
