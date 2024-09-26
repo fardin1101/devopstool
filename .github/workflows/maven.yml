@@ -50,19 +50,36 @@ jobs:
         run: ls -l target/
 
       # Test connection to the Nexus server
-      - name: Test connection to Nexus server
-        run: |
-          curl -v http://192.168.180.211:8088 || echo "Connection failed"
+      # - name: Test connection to Nexus server
+      #   run: |
+      #     curl -v http://192.168.180.211:8088 || echo "Connection failed"
 
       # Upload WAR file to Nexus
-      - name: Upload WAR file to Nexus
+      # - name: Upload WAR file to Nexus
+      #   env:
+      #     NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+      #     NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+      #   run: |
+      #     if [ -f target/devopstool.war ]; then
+      #         curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/devopstool.war
+      #     else
+      #         echo "WAR file does not exist!"
+      #         exit 1
+      #     fi
+
+      # Push the WAR file to Nexus
+
+      # Push the WAR file to Nexus
+      - name: Push WAR to Nexus
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
         run: |
-          if [ -f target/devopstool.war ]; then
-              curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/devopstool.war
-          else
-              echo "WAR file does not exist!"
-              exit 1
-          fi
+         mvn deploy:deploy-file \
+          -DartifactId=devopstool \
+          -Dpackaging=war \
+          -Dfile=target/devopstool.war \
+          -DrepositoryId=devopstoolnew/ \
+          -Durl=http://192.168.180.211:8088/repository/devopstoolnew//
+
+      
