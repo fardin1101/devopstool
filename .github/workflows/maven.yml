@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline  # Corrected: file name should be defined under `name`
 
 on:
   push:
@@ -22,6 +22,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
+        distribution: 'temurin'  # Specify the JDK distribution
 
     # Build the Java project using Maven
     - name: Build with Maven
@@ -30,6 +31,3 @@ jobs:
     # Run tests
     - name: Run Tests
       run: mvn test
-
-   
-    
