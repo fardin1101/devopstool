@@ -61,8 +61,8 @@ jobs:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       run: |
-          if [ -f target/devopstool-0.0.1-SNAPSHOT.war ]; then
-              curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool-0.0.1-SNAPSHOT.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/0.0.1-SNAPSHOT/devopstool-0.0.1-SNAPSHOT.war
+          if [ -f target/devopstool.war ]; then
+              curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/devopstool.war
           else
               echo "WAR file does not exist!"
               exit 1
