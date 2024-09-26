@@ -82,7 +82,7 @@ jobs:
           -Dpackaging=war \
           -Dfile=target/devopstool.war \
           -DrepositoryId=devopstoolnew \
-          -Durl=http://192.168.180.211:8088/repository/devopstoolnew/
+          -Durl=http://192.168.180.211:8088/devopstoolnew/
 
 
       
