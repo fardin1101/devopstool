@@ -46,12 +46,24 @@ jobs:
       run: docker push ${{ secrets.DOCKER_USERNAME }}/devopstool-new:latest
 
    # Push the WAR file to Nexus using curl
-    - name: Push WAR to Nexus
+    # - name: Push WAR to Nexus
+    #   env:
+    #     NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+    #     NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+    #   run: |
+    #     curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool-0.0.1-SNAPSHOT.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/0.0.1-SNAPSHOT/devopstool-0.0.1-SNAPSHOT.war
+
+    - name: List files in target directory
+      run: ls -l target/
+
+    - name: Upload WAR file to Nexus
       env:
-        NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
-        NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
       run: |
-        curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool-0.0.1-SNAPSHOT.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/0.0.1-SNAPSHOT/devopstool-0.0.1-SNAPSHOT.war
-
-      
-
+          if [ -f target/devopstool-0.0.1-SNAPSHOT.war ]; then
+              curl -v -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file target/devopstool-0.0.1-SNAPSHOT.war http://192.168.180.211:8088/repository/devopstoolnew/devopstool/0.0.1-SNAPSHOT/devopstool-0.0.1-SNAPSHOT.war
+          else
+              echo "WAR file does not exist!"
+              exit 1
+          fi
