@@ -63,7 +63,7 @@ jobs:
       # Update kubeconfig for the EKS cluster
       - name: Update kubeconfig for EKS
         run: |
-          aws eks update-kubeconfig --name pharmacy-cluster --region ap-south-1
+          aws eks update-kubeconfig --name k8s --region us-east-1
 
       # Deploy to EKS cluster
       - name: Deploy to EKS
