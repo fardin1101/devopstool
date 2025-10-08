@@ -19,7 +19,7 @@ public class index {
 	@GetMapping("/")
 	public String Hello()
 	{
-		return "Hello , Welcome to DevOpsTool Application";
+		return "Hello , Welcome to DevOpsTool Application hello";
 	}
 
 	
